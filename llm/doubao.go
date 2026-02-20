@@ -9,16 +9,16 @@ import (
 )
 
 func DouBao(content string) (string, error) {
-	fmt.Println("思考中。。。。。。")
+	fmt.Println("正在调用豆包大模型。。。。。")
 	client := arkruntime.NewClientWithApiKey(
 		// Get API Key：https://console.volcengine.com/ark/region:ark+cn-beijing/apikey
-		config.Cfg.Doubao.ApiKey,
-		arkruntime.WithBaseUrl(config.Cfg.Doubao.BaseUrl),
+		config.Cfg.DouBao.ApiKey,
+		arkruntime.WithBaseUrl(config.Cfg.DouBao.BaseUrl),
 	)
 	ctx := context.Background()
 
 	resp, err := client.CreateResponses(ctx, &responses.ResponsesRequest{
-		Model: config.Cfg.Doubao.ModelID,
+		Model: config.Cfg.DouBao.ModelID,
 		Input: &responses.ResponsesInput{Union: &responses.ResponsesInput_StringValue{StringValue: content}}, // Replace with your prompt
 		// Thinking: &responses.ResponsesThinking{Type: responses.ThinkingType_disabled.Enum()}, // Manually disable deep thinking
 	})

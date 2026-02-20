@@ -7,7 +7,12 @@ import (
 )
 
 type Config struct {
-	Doubao *DouBaoCfg `yaml:"doubao"`
+	DouBao *DouBaoCfg `yaml:"douBao"`
+	BaiDu  *BaiDuCfg  `yaml:"baiDu"`
+}
+type BaiDuCfg struct {
+	BaseUrl string `yaml:"baseUrl"`
+	ApiKey  string `yaml:"apiKey"`
 }
 type DouBaoCfg struct {
 	AccessKeyId     string `yaml:"accessKeyId"`
