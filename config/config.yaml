@@ -1,4 +1,6 @@
-AccessKeyId: AKLTYjJjZTIxYzM2MGM2NDZhNmExYzQxNzEyMTQ2ZmU5OTQ
-SecretAccessKey: T0RRNU1tVmxZbUkxWlRjd05HVTFNVGt3TURjNFpEbGxNRFF6WlRBNU1HWQ==
-ApiKey: 3502ebc7-9dc8-4062-8529-9650b4989d60
-ModelID: doubao-seed-2-0-code-preview-260215
+doubao:
+  accessKeyId: AKLTYjJjZTIxYzM2MGM2NDZhNmExYzQxNzEyMTQ2ZmU5OTQ
+  secretAccessKey: T0RRNU1tVmxZbUkxWlRjd05HVTFNVGt3TURjNFpEbGxNRFF6WlRBNU1HWQ==
+  apiKey: 3502ebc7-9dc8-4062-8529-9650b4989d60
+  modelID: doubao-seed-2-0-code-preview-260215
+  baseUrl: https://ark.cn-beijing.volces.com/api/v3

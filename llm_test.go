@@ -1,4 +1,4 @@
-package hello_ai_agent_go
+package main
 
 import (
 	"context"
