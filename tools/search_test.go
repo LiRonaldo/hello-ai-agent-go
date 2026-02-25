@@ -33,3 +33,8 @@ func Test_Search(t *testing.T) {
 	assert.NoError(t, err)
 	fmt.Println(res)
 }
+func Test_ContentList(t *testing.T) {
+	contentList, err := Search("华为最新手机")
+	assert.NoError(t, err)
+	fmt.Println(contentList)
+}

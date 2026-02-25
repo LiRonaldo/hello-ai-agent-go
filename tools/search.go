@@ -2,7 +2,6 @@ package tools
 
 import (
 	"encoding/json"
-	"fmt"
 	"hello-ai-agent-go/config"
 	"hello-ai-agent-go/utils"
 )
@@ -12,10 +11,10 @@ type messages struct {
 	Content string `json:"content"`
 }
 type baiDuApiResp struct {
-	Code       string      `json:"code"`
-	RequestId  string      `json:"request_id"`
-	Message    string      `json:"message"`
-	References []reference `json:"references"`
+	Code       int          `json:"code"`
+	RequestId  string       `json:"request_id"`
+	Message    string       `json:"message"`
+	References []*reference `json:"references"`
 }
 
 type reference struct {
@@ -35,24 +34,33 @@ func Search(query string) (string, error) {
 	header := make(map[string]string)
 	header["Content-Type"] = "application/json"
 	header["X-Appbuilder-Authorization"] = "Bearer " + config.Cfg.BaiDu.ApiKey
-	param := []messages{
+	msg := []messages{
 		{
 			Role:    "user",
 			Content: query,
 		},
 	}
-	buf, err := json.Marshal(param)
+	params := make(map[string]interface{})
+	params["messages"] = msg
+	params["search_recency_filter"] = "week"
+	buf, err := json.Marshal(params)
 	if err != nil {
 
 		return "", err
 	}
-	resp, err := utils.Post(config.Cfg.BaiDu.BaseUrl, buf, map[string]string{})
+	resp, err := utils.Post(config.Cfg.BaiDu.BaseUrl, buf, header)
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(resp)
 	defer resp.Body.Close()
-	var r baiDuApiResp
+	var r *baiDuApiResp
 	err = json.NewDecoder(resp.Body).Decode(&r)
+	if err != nil {
+		return "", err
+	}
+	if r != nil && r.Code == 0 && len(r.References) > 0 {
+
+		return r.References[0].Content, nil
+	}
 	return "", nil
 }
