@@ -37,12 +37,11 @@ func NewReActAgent(question string) *ReactAgent {
 }
 
 func (reAct *ReactAgent) Run() {
-	fmt.Println("管大海，您好，我是大海，能为您服务是我的荣幸!")
 	fmt.Printf("事事真多，问我:%s\n", reAct.question)
 
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("你别叫管大海了,你叫管扒皮吧。我累了,需要休息。")
+			fmt.Println("我累了,需要休息。")
 		}
 	}()
 	for reAct.currentStep < reAct.maxStep {
@@ -50,14 +49,15 @@ func (reAct *ReactAgent) Run() {
 		msg := fmt.Sprintf(constants.ReactPromptTemplate, constants.ToolsSearch, constants.ToolsSearch, reAct.question, reAct.question, reAct.history)
 		content, err := llm.DouBao(msg)
 		if err != nil {
-			fmt.Println("管大海，我刚才走神了！")
+			fmt.Println("我刚才走神了！")
 			break
 		}
 		thoughtRex := utils.NewRegexp(constants.ThoughtMatch)
 		thoughtList := thoughtRex.FindStringSubmatch(content)
 		// thought
-		_ = thoughtList[1]
-		fmt.Println("管扒皮,别催了,我正在思考")
+		thought := thoughtList[1]
+		fmt.Println("我正在思考:")
+		fmt.Println(thought)
 		actionRex := utils.NewRegexp(constants.ActionMatch)
 		actionList := actionRex.FindStringSubmatch(content)
 		//action
@@ -66,7 +66,7 @@ func (reAct *ReactAgent) Run() {
 		if strings.HasPrefix(action, constants.DouBaoFinish) {
 			finishRex := utils.NewRegexp(constants.FinishMatch)
 			answer := finishRex.FindStringSubmatch(action)
-			fmt.Println("管大海,我找到了答案:")
+			fmt.Println("我找到了答案:")
 			fmt.Println("-------------")
 			fmt.Print(wrapByPeriod(answer[1]))
 			fmt.Println("-------------")

@@ -4,3 +4,4 @@
 3.添加发送get，post请求工具。
 4.调用百度搜索api。
 5.完成reActAgent.
+6.添加planAndSolve类型agent
