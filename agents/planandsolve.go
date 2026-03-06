@@ -7,6 +7,11 @@ import (
 	"hello-ai-agent-go/utils"
 )
 
+/**
+ plan -> executor
+先将问题拆解成多步骤，然后一步步计算
+*/
+
 type PlanAndSolveAgent struct {
 	Question string
 }
