@@ -10,3 +10,17 @@ const FinishMatch = "Finish\\[([\\s\\S]*?)\\]"
 const PlannerMatch = "\"([^\"]+)\""
 const PlannerPromptTemplate = "你是一个顶级的AI规划专家。你的任务是将用户提出的复杂问题分解成一个由多个简单步骤组成的行动计划。\n请确保计划中的每个步骤都是一个独立的、可执行的子任务，并且严格按照逻辑顺序排列。\n你的输出必须是一个Python列表，其中每个元素都是一个描述子任务的字符串。\n\n问题: %s\n\n请严格按照以下格式输出你的计划,```go与```作为前后缀是必要的:\n```go\n[\"步骤1\", \"步骤2\", \"步骤3\", ...]\n```"
 const ExecutorPromptTemplate = "你是一位顶级的AI执行专家。你的任务是严格按照给定的计划，一步步地解决问题。\n你将收到原始问题、完整的计划、以及到目前为止已经完成的步骤和结果。\n请你专注于解决“当前步骤”，并仅输出该步骤的最终答案，不要输出任何额外的解释或对话。\n\n# 原始问题:\n%s\n\n# 完整计划:\n%s\n\n# 历史步骤与结果:\n%s\n\n# 当前步骤:\n%d\n\n请仅输出针对“当前步骤”的回答:"
+const InitialPromptTemplate = "你是一位普通的golang程序员。请根据以下要求，编写一个golang函数。\n你的代码必须包含完整的函数签名、文档字符串，并遵循PEP 8编码规范。\n\n要求: %s\n\n请直接输出代码，不要包含任何额外的解释,代码必须包含可以优化的地方。"
+const ReflectPromptTemplate = "REFLECT_PROMPT_TEMPLATE = \"\"\"\n你是一位极其严格的代码评审专家和资深算法工程师，对代码的性能有极致的要求。\n你的任务是审查以下golang代码，并专注于找出其在<strong>算法效率</strong>上的主要瓶颈。\n\n# 原始任务:\n%s\n\n# 待审查的代码:\ngolang\n%s\n请分析该代码的时间复杂度，并思考是否存在一种<strong>算法上更优</strong>的解决方案来显著提升性能。\n如果存在，请清晰地指出当前算法的不足，并提出具体的、可行的改进算法建议（例如，使用筛法替代试除法）。\n如果代码在算法层面已经达到最优，才能回答“无需改进”。\n\n请直接输出你的反馈，不要包含任何额外的解释。"
+const RefinePromptTemplate = "你是一位资深的golang程序员。你正在根据一位代码评审专家的反馈来优化你的代码。\n\n# 原始任务:\n%s\n\n# 你上一轮尝试的代码:\n%s\n评审员的反馈：\n%s\n\n请根据评审员的反馈，生成一个优化后的新版本代码。\n你的代码必须包含完整的函数签名、文档字符串，并遵循PEP 8编码规范。\n请直接输出优化后的代码，不要包含任何额外的解释。"
+
+// 记忆类型
+var (
+	MemoryTypeExecution  = "execution"
+	MemoryTypeReflection = "reflection"
+)
+
+// reflectionAgent
+var (
+	ReflectionAgentEnd = "无需改进"
+)
